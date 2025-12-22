@@ -188,7 +188,7 @@ _PyOptimizer_Optimize(
     executor->vm_data.chain_depth = chain_depth;
     assert(executor->vm_data.valid);
     _PyExitData *exit = _tstate->jit_tracer_state.initial_state.exit;
-    if (exit != NULL) {
+    if (exit != NULL && !progress_needed) {
         exit->executor = executor;
     }
     else {
@@ -1773,6 +1773,7 @@ static int
 executor_clear(PyObject *op)
 {
     executor_invalidate(op);
+    return 0;
 }
 
 void
